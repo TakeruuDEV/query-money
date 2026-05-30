@@ -7,7 +7,7 @@ import Link from "next/link";
 
 import { PanelLeft, PanelLeftClose, Wallet } from "lucide-react";
 
-import { navLinks } from "./nav-links";
+import { navLinks } from "@/config/navigation";
 
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
@@ -28,7 +28,7 @@ export function Sidebar({
   return (
       <aside
         className={cn(
-          "sticky top-0 hidden h-screen shrink-0 overflow-hidden flex-col border-r border-[#626870] bg-[#0E1217] backdrop-blur-xl transition-[width] duration-300 ease-out md:flex",
+          "sticky top-0 hidden h-screen shrink-0 overflow-hidden flex-col border-r border-[#1B1F28] bg-[#0E1217] backdrop-blur-xl transition-[width] duration-300 ease-out md:flex",
           collapsed ? "w-18" : "w-62"
         )}
       >
@@ -93,7 +93,7 @@ export function Sidebar({
           })}
         </nav>
 
-        <hr className="my-2 border-[#626870]" />
+        <hr className="my-2 border-[#1B1F28]" />
 
         <div className="mx-auto">
           {!collapsed && (

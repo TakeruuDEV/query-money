@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Sidebar } from "@/components/sidebar/sidebar";
+import { Sidebar } from "@/components/sidebar/page";
+import Header from "@/components/header/page";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -21,9 +22,12 @@ export default function RootLayout({
       lang="pt-br"
       className={cn("h-full", "antialiased", "font-sans", geist.variable)}
     >
-      <body className="min-h-full flex">
+      <body className="min-h-screen flex">
         <Sidebar valorRestante={700} entrada={1000} />
-        <main className="flex-1">{children}</main>
+        <div className="w-flex flex-1 flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+        </div>
       </body>
     </html>
   );
