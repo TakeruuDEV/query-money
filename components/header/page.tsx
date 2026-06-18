@@ -10,6 +10,7 @@ export default function Header() {
   const pathname = usePathname();
   const title = navLinks.find((link) => link.href === pathname)?.title;
   const subtitle = navLinks.find((link) => link.href === pathname)?.subtitle;
+  const buttonTitle = title === "Dashboard" ? "Nova transação" : navLinks.find((link) => link.href === pathname)?.buttonTitle;
   return (
     <header className="bg-[#0A0D12] text-white p-4 border-b border-[#1B1F28]">
       <div className="flex flex-row justify-between leading-none">
@@ -23,7 +24,7 @@ export default function Header() {
           <FiltroMesAno/>
           <Button variant="outline" size="lg" className="text-black border-none bg-[#4ED589] hover:bg-[#4ED589]/90 hover:cursor-pointer">
             <Plus className="h-4 w-4" />
-            Nova transação
+            {buttonTitle}
           </Button>
         </div>
       </div>
