@@ -1,0 +1,49 @@
+datasource db {
+    provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Categoria {
+  id              String               @id @default(uuid())
+  nome            String
+
+  movimentacoes   Movimentacao[]
+}
+
+
+model Meta {
+  id             String    @id @default(uuid())
+  nome           String
+  valorObjetivo Decimal   @db.Decimal(10, 2)
+  valorGuardado Decimal   @db.Decimal(10, 2) @default(0.00)
+  criada_em      DateTime  @default(now())
+}
+
+model Movimentacao{
+  id        String   @id @default(uuid())
+  descricao String
+  valor     Decimal  @db.Decimal(10,2)
+
+  tipo      TipoMovimentacao
+
+  data      DateTime @db.Date
+
+  categoria_id String
+
+  categoria Categoria @relation(fields: [categoria_id], references:[id])
+}
+
+enum TipoMovimentacao {
+  ENTRADA
+  SAIDA
+}
+
+enum FormaPagamento {
+  DINHEIRO
+  PIX
+  DEBITO
+  CREDITO
+}
