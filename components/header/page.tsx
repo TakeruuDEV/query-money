@@ -3,13 +3,20 @@
 import { navLinks } from "@/config/navigation";
 import { FiltroMesAno } from "./components/filtro-mes-ano";
 import { usePathname } from "next/navigation";
-import { Button } from "../ui/button";
-import { Plus } from "lucide-react";
+import BotaoCriar from "../ui/BotaoCriar";
 
 export default function Header() {
   const pathname = usePathname();
   const title = navLinks.find((link) => link.href === pathname)?.title;
   const subtitle = navLinks.find((link) => link.href === pathname)?.subtitle;
+  const buttonTitle =
+    title === "Dashboard"
+      ? "Nova transação"
+      : navLinks.find((link) => link.href === pathname)?.buttonTitle;
+  const buttonHref =
+    title === "Dashboard"
+      ? "/transacoes/nova-transacao"
+      : navLinks.find((link) => link.href === pathname)?.hrefButton;
   return (
     <header className="bg-[#0A0D12] text-white p-4 border-b border-[#1B1F28]">
       <div className="flex flex-row justify-between leading-none">
@@ -20,11 +27,13 @@ export default function Header() {
           <span className="text-[13px] text-[#787F89]">{subtitle}</span>
         </div>
         <div className="flex items-center gap-3">
-          <FiltroMesAno/>
-          <Button variant="outline" size="lg" className="text-black border-none bg-[#4ED589] hover:bg-[#4ED589]/90 hover:cursor-pointer">
-            <Plus className="h-4 w-4" />
-            Nova transação
-          </Button>
+          <FiltroMesAno />
+          {buttonHref && (
+            <BotaoCriar
+              titulo={buttonTitle ?? "Criar"}
+              href={buttonHref}
+            />
+          )}
         </div>
       </div>
     </header>

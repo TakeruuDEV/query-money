@@ -9,69 +9,41 @@ generator client {
 model Categoria {
   id              String               @id @default(uuid())
   nome            String
-  contas_fixas    ContaFixa[]
-  gastos_variados GastoVariado[]
-  investimentos   Investimento[]
-  metas           Meta[]
+
+  movimentacoes   Movimentacao[]
 }
 
-model ContaFixa {
-  id                 String    @id @default(uuid())
-  nome               String
-  valor_estimado     Decimal   @db.Decimal(10, 2)
-  valor_real         Decimal?  @db.Decimal(10, 2)
-  data_de_vencimento DateTime  @db.Date
-  data_de_pagamento  DateTime? @db.Date
-  pago               Boolean   @default(false)
-  
-  // Relacionamento com Categoria
-  categoria_id       String
-  categoria          Categoria @relation(fields: [categoria_id], references: [id])
-}
-
-model Investimento {
-  id           String    @id @default(uuid())
-  nome         String
-  valor        Decimal   @db.Decimal(10, 2)
-  data         DateTime  @db.Date
-
-  categoria_id String
-  categoria    Categoria @relation(fields: [categoria_id], references: [id])
-}
 
 model Meta {
   id             String    @id @default(uuid())
   nome           String
-  valor_de_compra Decimal   @db.Decimal(10, 2)
-  valor_guardado Decimal   @db.Decimal(10, 2) @default(0.00)
-
-  categoria_id   String
-  categoria      Categoria @relation(fields: [categoria_id], references: [id])
+  valorObjetivo Decimal   @db.Decimal(10, 2)
+  valorGuardado Decimal   @db.Decimal(10, 2) @default(0.00)
+  criada_em      DateTime  @default(now())
 }
 
-model Entrada {
+model Movimentacao{
   id        String   @id @default(uuid())
-  valor     Decimal  @db.Decimal(10, 2)
-  descricao String   @db.VarChar(100)
-  fonte     String   @db.VarChar(100)
+  descricao String
+  valor     Decimal  @db.Decimal(10,2)
+
+  tipo      TipoMovimentacao
+
   data      DateTime @db.Date
+
+  categoria_id String
+
+  categoria Categoria @relation(fields: [categoria_id], references:[id])
 }
 
-model GastoVariado {
-  id                 String    @id @default(uuid())
-  nome               String
-  valor              Decimal   @db.Decimal(10, 2)
-  data               DateTime  @db.Date
-  forma_de_pagamento FormaPagamento
-  essencial          Boolean   @default(false)
-  
-  categoria_id       String
-  categoria          Categoria @relation(fields: [categoria_id], references: [id])
+enum TipoMovimentacao {
+  ENTRADA
+  SAIDA
 }
 
 enum FormaPagamento {
-    DINHEIRO
-    PIX
-    DEBITO
-    CREDITO
+  DINHEIRO
+  PIX
+  DEBITO
+  CREDITO
 }

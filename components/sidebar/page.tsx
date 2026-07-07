@@ -2,13 +2,9 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-
 import Link from "next/link";
-
 import { PanelLeft, PanelLeftClose, Wallet } from "lucide-react";
-
 import { navLinks } from "@/config/navigation";
-
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
@@ -33,9 +29,9 @@ export function Sidebar({
         )}
       >
         <div className="flex h-16 items-center gap-2.5 px-4">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-linear-to-br from-primary to-[oklch(0.72_0.14_250)] shadow-lg shadow-primary/20">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#00c896] shadow-lg shadow-[#00c896]/20">
             <Wallet
-              className="h-4.5 w-4.5 text-primary-foreground"
+              className="h-4.5 w-4.5 text-[#0a1f18]"
               strokeWidth={2.5}
             />
           </div>
@@ -61,8 +57,10 @@ export function Sidebar({
           )}
 
           {navLinks.map((link) => {
-            const active = pathname === link.href;
-
+            const active = pathname === link.href || pathname.startsWith(link.href + "/");
+            if(link.aparecerNoMenu === false) {
+              return null;
+            }
             return (
               <Link
                 key={link.href}
